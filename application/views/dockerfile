@@ -1,0 +1,12 @@
+
+docker run -it -d  \
+  --label traefik.http.routers.wasabatu.rule=Host\(\`wasabatu.phamasoft.com\`\) \
+  --label traefik.http.routers.wasabatu.tls.certresolver=lets-encrypt \
+  --label traefik.http.routers.wasabatu.tls=true \
+  --label traefik.http.routers.wasabatu.service=wasabatu-http \
+  --label traefik.http.services.wasabatu-http.loadbalancer.server.port=80 \
+  --name wasabatu \
+  --network web \
+  --restart always \
+  --expose 80 \
+  emasanga/mikoposoft:may13

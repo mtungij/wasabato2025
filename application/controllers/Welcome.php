@@ -343,7 +343,7 @@ class Welcome extends CI_Controller {
       	  $restoration = $loan_data->restration;
       	  $loan_int = $loan_data->loan_int;
       	  $kumaliza = $depost;
-      	    // print_r($group_id);
+      	    // print_r($restoration );
       	    //      exit();
       	  $day = $loan_data->day;
       	  $renew_loan = $loan_data->renew_loan;

@@ -26,8 +26,8 @@ date_default_timezone_set('Africa/Dar_es_Salaam');
 |
 */
 
-$config['base_url'] = 'https://wasabatu.phamasoft.com/'; 
-// $config['base_url'] = 'https://emidmbezi.loan-pocket.com/'; 
+
+$config['base_url'] = 'https://emidmbezi.loan-pocket.com/'; 
 
 /*
 |--------------------------------------------------------------------------

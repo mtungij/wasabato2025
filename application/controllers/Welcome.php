@@ -958,7 +958,7 @@ public function sendsms($phone,$massage){
 	//public function sendsms(){
 	//$phone = '255628323760';
 	//$massage = 'mapenzi yanauwa';
-	$api_key = 'fas7sN/6pDKLBMq6';
+	$api_key = 'FdWFjqI.bkLJ92iE69uyJi0/jB';
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL,"https://galadove.loan-pocket.com/api/v1/receive/action/send/sms");
 curl_setopt($ch, CURLOPT_POST, 1);

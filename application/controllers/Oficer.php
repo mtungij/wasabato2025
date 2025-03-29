@@ -5538,7 +5538,7 @@ public function deposit_loan_saving(){
 public function sendsms($phone,$massage){
     //$phone = '0753871034';
     //$sms = 'mapenzi yanauwa';
-    $api_key = 'Su33xZCzIDPALbL4';
+    $api_key = 'FdWFjqI.bkLJ92iE69uyJi0/jB';
     //$api_key = 'qFzd89PXu1e/DuwbwxOE5uUBn6';
     //$curl = curl_init();
 $ch = curl_init();

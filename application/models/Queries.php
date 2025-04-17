@@ -5523,6 +5523,25 @@ public function get_today_registered_customers_count($comp_id) {
     return $this->db->count_all_results('tbl_customer'); // Returns count directly
 }
 
+
+public function get_sum_interest_paid_current_month($comp_id)
+{
+    $first_day = date('Y-m-01'); // First day of current month
+    $last_day = date('Y-m-t');   // Last day of current month
+
+    $query = $this->db->select('
+            SUM(ROUND(d.depost * ((l.loan_int - l.how_loan) / l.loan_int), 2)) AS total_interest_paid
+        ')
+        ->from('tbl_depost d')
+        ->join('tbl_loans l', 'd.loan_id = l.loan_id')
+        ->where('d.comp_id', $comp_id)
+        ->where('d.depost_day >=', $first_day)
+        ->where('d.depost_day <=', $last_day)
+        ->get();
+
+    return $query->row()->total_interest_paid;
+}
+
 public function get_sum_interest_paid_today($comp_id)
 {
     $today = date('Y-m-d'); // Get today's date

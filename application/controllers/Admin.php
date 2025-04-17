@@ -72,6 +72,7 @@ class Admin extends CI_Controller {
   $today_deposit = $this->queries->get_today_total_depost($comp_id);
   $today_principal = $this->queries->get_sum_principal_paid_today($comp_id);
   $today_interest= $this->queries->get_sum_interest_paid_today($comp_id);
+  $monthly_interest = $this->queries->get_sum_interest_paid_current_month($comp_id);
 
 
   // echo "<pre>";
@@ -92,6 +93,7 @@ class Admin extends CI_Controller {
    'today_deposit' => $today_deposit,
    'today_principal'=> $today_principal,
    'today_interest' => $today_interest,
+   'monthly_interest' => $monthly_interest,
    'total_malazo' => $total_malazo, 
    'total_remain_amount' => $total_remain_amount]);
 	}

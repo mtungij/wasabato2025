@@ -69,6 +69,9 @@ class Admin extends CI_Controller {
   $total_remain_amount = $this->queries->get_total_remain_amount($sugus);
 
   $todaywith =$this->queries->get_loan_approve_today($comp_id);
+  $today_deposit = $this->queries->get_today_total_depost($comp_id);
+  $today_principal = $this->queries->get_sum_principal_paid_today($comp_id);
+  $today_interest= $this->queries->get_sum_interest_paid_today($comp_id);
 
 
   // echo "<pre>";
@@ -85,7 +88,12 @@ class Admin extends CI_Controller {
   'account_capital'=>$account_capital , 'total_loan_with' =>$total_loan_with,
   'montly_interest' => $montly_interest, 'customer_monthly' =>$customer_monthly,
   'total_monthly_income' =>$total_monthly_income ,
-   'rejesho' => $rejesho , 'total_malazo' => $total_malazo, 'total_remain_amount' => $total_remain_amount]);
+   'rejesho' => $rejesho , 
+   'today_deposit' => $today_deposit,
+   'today_principal'=> $today_principal,
+   'today_interest' => $today_interest,
+   'total_malazo' => $total_malazo, 
+   'total_remain_amount' => $total_remain_amount]);
 	}
 
   public function mikopo_chefuchefu()

@@ -5487,6 +5487,54 @@ public function check_empl_privillage($position_id,$empl_id,$comp_id){
  	return $data->result();
  }
 
+ public function get_today_total_depost($comp_id)
+{
+    $today = date('Y-m-d');
+
+    $query = $this->db->select('SUM(d.depost) AS total_depost')
+        ->from('tbl_depost d')
+        ->where('d.comp_id', $comp_id)
+        ->where('d.depost_day', $today)
+        ->get();
+
+    return $query->row()->total_depost;
+}
+
+public function get_sum_principal_paid_today($comp_id)
+{
+    $today = date('Y-m-d'); // Get today's date
+
+    $query = $this->db->select('
+            SUM(ROUND(d.depost * (l.how_loan / l.loan_int), 2)) AS total_principal_paid
+        ')
+        ->from('tbl_depost d')
+        ->join('tbl_loans l', 'd.loan_id = l.loan_id')
+        ->where('d.comp_id', $comp_id)
+        ->where('d.depost_day', $today)
+        ->get();
+
+    // Return the total principal paid for today (or 0 if no records found)
+    return ($query->row()) ? $query->row()->total_principal_paid : 0;
+}
+
+
+public function get_sum_interest_paid_today($comp_id)
+{
+    $today = date('Y-m-d'); // Get today's date
+
+    $query = $this->db->select('
+            SUM(ROUND(d.depost * ((l.loan_int - l.how_loan) / l.loan_int), 2)) AS total_interest_paid
+        ')
+        ->from('tbl_depost d')
+        ->join('tbl_loans l', 'd.loan_id = l.loan_id')
+        ->where('d.comp_id', $comp_id)
+        ->where('d.depost_day', $today)
+        ->get();
+
+    // Return the total interest paid for today (or 0 if no records found)
+    return ($query->row()) ? $query->row()->total_interest_paid : 0;
+}
+
 
  public function get_sum_blanch_account($blanch_id){
  	$data = $this->db->query("SELECT SUM(blanch_capital) AS total_capital_blanch FROM tbl_blanch_account WHERE blanch_id = '$blanch_id'");

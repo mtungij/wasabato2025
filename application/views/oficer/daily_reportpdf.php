@@ -80,31 +80,40 @@ tr:nth-child(even) {
                                     </thead>
                                    
                                     <tbody>
-                                    <tr>
-                                   
-                                    <td>ONGEZEKO KUTOKA AKAUNTI KUU</td>
-                                    
-                                    <td><?php echo number_format(@$cash_transaction->total_float); ?></td>                                                       
-                                    </tr>
-                                     <tr>
-                                    <td>ONGEZEKO KUTOKA FOMU & FAINI</td>
-                                    
-                                    <td><?php echo number_format($income->total_transaction); ?></td>                                                     
-                                    </tr>
-                                     <tr>
-                                    <td>ONGEZEKO KUTOKA MADENI SUGU NDANI YA MFUMO</td>
-                                    <td>
-                                        <?php echo number_format(@$total_kopesha_in->total_trans_in + @$total_kopesha_in->total_fee_in); ?>
-                                    </td>
-                                     </tr>  
-                                     <tr>
-                                    <td>ONGEZEKO KUTOKA MADENI SUGU NJE YA MFUMO</td>
-                                    <td><?php echo number_format(@$total_kopesha_out->total_trans_out + @$total_kopesha_out->total_fee_out) ?></td>
-                                     </tr>                                                    
+                                    <?php if (!empty($cash_transaction->total_float)) { ?>
+<tr>
+    <td>BANK ONGEZEKO </td>
+    <td><?php echo number_format(@$cash_transaction->total_float); ?></td>
+</tr>
+<?php } ?>
+
+<?php if (!empty($income->total_transaction)) { ?>
+<tr>
+    <td>ONGEZEKO KUTOKA FOMU & FAINI</td>
+    <td><?php echo number_format($income->total_transaction); ?></td>
+</tr>
+<?php } ?>
+
+<?php if (!empty($total_kopesha_in->total_trans_in) || !empty($total_kopesha_in->total_fee_in)) { ?>
+<tr>
+    <td>ONGEZEKO KUTOKA MADENI SUGU NDANI YA MFUMO</td>
+    <td>
+        <?php echo number_format(@$total_kopesha_in->total_trans_in); ?> / Makato(<?php echo number_format(@$total_kopesha_in->total_fee_in); ?>)
+    </td>
+</tr>
+<?php } ?>
+
+<?php if (!empty($total_kopesha_out->total_trans_out) || !empty($total_kopesha_out->total_fee_out)) { ?>
+<tr>
+    <td>ONGEZEKO KUTOKA MADENI SUGU NJE YA MFUMO</td>
+    <td><?php echo number_format(@$total_kopesha_out->total_trans_out) ?> / Makato(<?php echo number_format(@$total_kopesha_out->total_fee_out); ?>)</td>
+</tr>
+<?php } ?>
+                                                    
                                     
 
                                     <tr>
-                                    <td>JANA</td>
+                                    <td>LALA JANA</td>
                                     
                                     <td><?php echo number_format(@$yester_day_balance->cash_amount); ?></td>                                                       
                                     </tr>
@@ -114,16 +123,12 @@ tr:nth-child(even) {
                                     
                                     <td><?php echo number_format(@$today_deposit->total_deposit); ?></td>                                                       
                                     </tr>
-                                      <tr>
-                                    <td>BAKI</td>
-                                    
-                                    <td><?php echo number_format(@$today_remain_deposit->total_restratio_today); ?></td>                                                       
-                                    </tr>
+                                   
 
                                      <tr>
-                                    <td>JUMLA</td>
+                                    <td>JUMLA CASH</td>
                                     
-                                    <td><?php echo number_format(@$cash_transaction->total_float + $income->total_transaction + @$yester_day_balance->cash_amount + $today_deposit->total_deposit) ?></td> 
+                                    <td><b><?php echo number_format(@$cash_transaction->total_float + $income->total_transaction + @$yester_day_balance->cash_amount + $today_deposit->total_deposit + @$total_kopesha_in->total_trans_in + $total_kopesha_out->total_trans_out) ?></b></td> 
                                     <!-- <p>@$total_today_cash->today_cash</p>                                                       -->
                                     </tr>
                                         <tr>
@@ -136,34 +141,37 @@ tr:nth-child(even) {
                                     
                                     <td><?php echo number_format(@$loan_with->total_loan_int - @$loan_with->total_loan_with); ?></td>                                                       
                                     </tr>
-                                        <tr>
+                                        <!-- <tr>
                                     <td>DOUBLE</td>
                                     
-                                    <td><?php echo number_format(@$prepaid->total_prepaid); ?></td>                                                       
-                                    </tr>
+                                    <td><//?php echo number_format(@$prepaid->total_prepaid); ?></td>                                                       
+                                    </tr> -->
                                     <tr>
                                     <td>STOO</td>
                                     
                                     <td><?php echo number_format(@$stoo->total_stoo); ?></td>                                                      
                                     </tr>
+                                    
+
+
                                     <?php foreach ($acount as $acounts): ?>
                                     <tr>
                                     <td>LALA <?php echo $acounts->account_name; ?></td>
                                     <td><?php echo number_format($acounts->blanch_capital); ?></td>                                                       
                                     </tr>
                                     <?php endforeach; ?>
-                                    <tr>
-                                    <td>AKIBA AMANA</td>
+                                    <!-- <tr> -->
+                                    <!-- <td>AKIBA AMANA</td> -->
                                     
-                                    <td><?php echo number_format(@$saving_deposit_remain->total_amount_saving); ?></td>                                                      
-                                    </tr>
+                                    <!-- <td><//?php echo number_format(@$saving_deposit_remain->total_amount_saving); ?></td>                                                       -->
+                                    <!-- </tr> -->
                                     <tr>
                                         <td><b>LALA JUMLA</b></td>
                                         <td><b><?php echo number_format(@$total_today_cash->today_cash); ?></b></td>
                                     </tr>
                                      
                                      <tr>
-                                      <td style="text-align: center;"><b>FOMU & FAINI</b></td> 
+                                      <td><div class="text-center"><b>FOMU & FAINI</b></div></td> 
                                       <td></td>      
                                      </tr>
                                       <tr>
@@ -195,11 +203,11 @@ tr:nth-child(even) {
 
                                     <tr>
                                     <td><b>JUMLA FOMU & FAINI</b></td>
-                                    <td><b><?php echo number_format(@$yesterday_income->amount + @$today_total_income) ?></b></td>                                                       
+                                    <td><b><?php echo number_format(@$yesterday_income->amount + @$today_total_income); ?></b></td>                                                       
                                     </tr>
 
                                      <tr>
-                                      <td style="text-align: center;"><b>MATUMIZI</b></td> 
+                                      <td><div class="text-center"><b>MATUMIZI</b></div></td> 
                                       <td></td>      
                                      </tr>
                                      <?php if ($more_expenses): ?>
@@ -211,15 +219,15 @@ tr:nth-child(even) {
                                      <?php endforeach; ?>
                                  <?php else: ?>
                                     <tr>
-                                        <td style="color:red;">Hakuna Matumizi</td>
-                                        <td style="color:red;">0.00</td>
+                                        <td style="color:red;"></td>
+                                        <td style="color:red;"></td>
                                     </tr>
                                      <?php endif ?>
 
-                                    <tr>
+                                    <!-- <tr>
                                     <td>KOPESHA</td>
-                                    <td><?php echo number_format($today_transactionInc->total_incTrans) ?></td>                                                     
-                                    </tr>
+                                    <td></?php echo number_format($today_transactionInc->total_incTrans) ?></td>                                                     
+                                    </tr> -->
 
                                     <tr>
                                     <td><b>JUMLA YA MATUMZI</b></td>
@@ -232,12 +240,12 @@ tr:nth-child(even) {
                                     </tr>
 
                                      <tr>
-                                      <td style="text-align: center;"><b>WATEJA</b></td> 
+                                      <td><div class="text-center"><b>WATEJA</b></div></td> 
                                       <td></td>      
                                      </tr>
 
                                     <tr>
-                                    <td>JUMALA YA WATEJA</td>
+                                    <td>WATEJA SAJILIWA</td>
                                     <?php $blanch_id = $this->session->userdata('blanch_id'); ?>
                                     <?php $customer = $this->db->query("SELECT * FROM tbl_customer WHERE blanch_id = '$blanch_id'"); ?>
                                     <td><?php echo $customer->num_rows(); ?></td>                                                       
@@ -249,7 +257,7 @@ tr:nth-child(even) {
                                     <td><?php echo $customer_active->num_rows(); ?></td>                                                       
                                     </tr>
                                     <tr>
-                                    <td>NJE YA MAKATABA</td>
+                                    <td>DENI NJE</td>
                                     <?php $customer_out = $this->db->query("SELECT * FROM tbl_customer WHERE blanch_id = '$blanch_id' AND customer_status = 'out'"); ?>
                                     <td><?php echo $customer_out->num_rows(); ?></td>                                                       
                                     </tr>
@@ -269,7 +277,7 @@ tr:nth-child(even) {
                                     <td><?php echo  $loan_not_dep->num_rows()?></td>                                                       
                                     </tr>
                                     <tr>
-                                    <td>WATEJA WAPYA</td>
+                                    <td>WATEJA GAWIWA WAPYA</td>
 
                                     <?php $customer_new = $this->db->query("SELECT * FROM tbl_customer WHERE blanch_id = '$blanch_id' AND reg_date = '$date'"); ?>
                                     <td><?php echo $customer_new->num_rows(); ?></td>                                                       
@@ -281,7 +289,7 @@ tr:nth-child(even) {
                                     </tr> -->
                          
                                      <tr>
-                                      <td style="text-align: center;"><b>MADENI SUGU NDANI YA MFUMO</b></td> 
+                                      <td><div class="text-center"><b>MADENI SUGU</b></div></td> 
                                       <td></td>      
                                      </tr>
 
@@ -289,22 +297,27 @@ tr:nth-child(even) {
                                     <td>JANA</td>
                                     <td><?php echo number_format(@$yesterDay->total_balance); ?></td>                                                       
                                     </tr>
+
+                                   
+
                                     <tr>
-                                    <td>LEO</td>
+                                    <td>LEO CASH</td>
                                     <td><?php echo number_format($deposit_out->total_out_dep); ?></td>                                                       
                                     </tr>
-                                     <tr>
-                                    <td>BAKI</td>
+
+                                    <tr>
+                                    <td>DENI NJE JUMLA</td>
                                     <td><?php echo number_format($remain_out->total_out_rem); ?></td>                                                       
                                     </tr>
+                                   
                                     <tr>
                                     <td><b>JUMLA</b></td>
                                     <td><b><?php echo number_format(@$yesterDay->total_balance + $deposit_out->total_out_dep); ?></b></td>                                                       
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                     <td>KOPESHA</td>
-                                    <td><?php echo number_format(@$total_kopesha_in->total_trans_in + @$total_kopesha_in->total_fee_in); ?></td>                                                       
-                                    </tr>
+                                    <td><//?php echo number_format(@$total_kopesha_in->total_trans_in + @$total_kopesha_in->total_fee_in); ?></td>                                                       
+                                    </tr> -->
                                     <?php foreach ($account_out_balance as $account_out_balances): ?>
                                     <tr>
                                     <td>LALA <?php echo $account_out_balances->account_name; ?></td>
@@ -318,43 +331,43 @@ tr:nth-child(even) {
                                     </tr>
 
 
-
+<!-- 
                                     <tr>
-                                      <td style="text-align: center;"><b>MADENI SUGU NJE YA MFUMO</b></td> 
+                                      <td><div class="text-center"><b>MADENI SUGU NJE YA MFUMO</b></div></td> 
                                       <td></td>      
                                      </tr>
 
                                      <tr>
                                     <td>JANA</td>
-                                    <td><?php echo number_format(@$yester_dayNje->amount); ?></td>                                                       
+                                    <td><//?php echo number_format(@$yester_dayNje->amount); ?></td>                                                       
                                     </tr>
                                     <tr>
                                     <td>LEO</td>
-                                    <td><?php echo number_format(@$total_nje->total_out_today); ?></td>                                                       
+                                    <td><//?php echo number_format(@$total_nje->total_out_today); ?></td>                                                       
                                     </tr>
                                      <tr>
                                     <td>BAKI</td>
-                                    <td><?php echo number_format(@$nje_deni->out_amount - @$sum_out->total_out); ?></td>                                                       
+                                    <td><//?php echo number_format(@$nje_deni->out_amount - @$sum_out->total_out); ?></td>                                                       
                                     </tr>
                                     <tr>
                                     <td><b>JUMLA</b></td>
-                                    <td><b><?php echo number_format(@$yester_dayNje->amount + @$total_nje->total_out_today); ?></b></td>                                                       
+                                    <td><b><//?php echo number_format(@$yester_dayNje->amount + @$total_nje->total_out_today); ?></b></td>                                                       
                                     </tr>
                                     <tr>
                                     <td>KOPESHA</td>
-                                    <td><?php echo number_format(@$total_kopesha_out->total_trans_out + @$total_kopesha_out->total_fee_out) ?></td>                                                       
+                                    <td><//?php echo number_format(@$total_kopesha_out->total_trans_out + @$total_kopesha_out->total_fee_out) ?></td>                                                       
                                     </tr>
-                                    <?php foreach ($nje_account as $nje_accounts): ?>
+                                    <///?php foreach ($nje_account as $nje_accounts): ?>
                                     <tr>
-                                    <td>LALA <?php echo $nje_accounts->account_name; ?></td>
-                                    <td><?php echo number_format($nje_accounts->amount_receive); ?></td>                                                       
+                                    <td>LALA <//?php echo $nje_accounts->account_name; ?></td>
+                                    <td><//?php echo number_format($nje_accounts->amount_receive); ?></td>                                                       
                                     </tr>
-                                    <?php endforeach; ?>
+                                    <//?php endforeach; ?>
 
                                     <tr>
                                     <td><b>LALA JUMLA</b></td>
-                                    <td><b><?php echo number_format(@$total_out_system); ?></b></td>                                                       
-                                    </tr>
+                                    <td><b><//?php echo number_format(@$total_out_system); ?></b></td>                                                       
+                                    </tr> -->
 
 
 

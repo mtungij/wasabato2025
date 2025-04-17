@@ -5517,6 +5517,11 @@ public function get_sum_principal_paid_today($comp_id)
     return ($query->row()) ? $query->row()->total_principal_paid : 0;
 }
 
+public function get_today_registered_customers_count($comp_id) {
+    $this->db->where('reg_date', date('Y-m-d'));
+    $this->db->where('comp_id', $comp_id);
+    return $this->db->count_all_results('tbl_customer'); // Returns count directly
+}
 
 public function get_sum_interest_paid_today($comp_id)
 {
